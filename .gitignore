@@ -1,12 +1,12 @@
 __pycache__/
 
 secret/
+instance/
 migrations/
 
 .venv/
 
 subscriptions.json
-app.db
 
 *.crt
 *.key
