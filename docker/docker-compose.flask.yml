@@ -1,6 +1,7 @@
 services:
   web:
     build: .
+    dockerfile: Dockerfile.flask
     image: flask_web:latest
     container_name: flask_web
     ports:
