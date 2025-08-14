@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    image: flask_web:latest
+    container_name: flask_web
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    env_file:
+      - ${DOTENV_PATH}
+    volumes:
+      - .:/app
+
+
+

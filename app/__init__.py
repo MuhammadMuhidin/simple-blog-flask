@@ -1,17 +1,13 @@
 from flask import Flask, current_app
 from flask_migrate import Migrate
-#from dotenv import load_dotenv
 import os
 
 def create_app():
-    # Load environment variables from .env file (if used .env file)
-    #load_dotenv('.env.dev')
-
     # Create Flask application instance
     app = Flask(__name__,instance_relative_config=True)
 
     # Load config based on the environment variable
-    env = os.environ.get('FLASK_ENV', 'Development')
+    env = os.environ.get('FLASK_ENV')
     print(f"Current environment: {env.upper()}")
     
     # Set the configuration based on the environment
