@@ -1,7 +1,8 @@
 services:
   web:
-    build: .
-    dockerfile: Dockerfile.flask
+    build: 
+      context: .
+      dockerfile: Dockerfile.flask
     image: flask_web:latest
     container_name: flask_web
     ports:
@@ -10,8 +11,6 @@ services:
       - ${DOTENV_PATH}
     volumes:
       - ../flask:/app
-    depends_on:
-      - db
 
 
 
