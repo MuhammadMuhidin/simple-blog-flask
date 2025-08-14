@@ -1,0 +1,10 @@
+__pycache__/
+
+.venv/
+.env
+
+subscriptions.json
+app.db
+
+*.crt
+*.key

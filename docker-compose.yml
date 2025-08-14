@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: flask_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+  
+  web:
+    build: .
+    container_name: flask_web
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      #FLASK_ENV: Production
+      FLASK_ENV: Development
+      SQLALCHEMY_DATABASE_URI_PROD: ${SQLALCHEMY_DATABASE_URI_PROD}
+      SQLALCHEMY_DATABASE_URI_DEV: ${SQLALCHEMY_DATABASE_URI_DEV}
+      API_KEY_BLAST: ${API_KEY_BLAST}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY}
+    volumes:
+      - .:/app
+
+  nginx:
+    image: nginx:alpine
+    container_name: flask_nginx
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/certs:/etc/nginx/certs
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+
+volumes:
+  db_data:
